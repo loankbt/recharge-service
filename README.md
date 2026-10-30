@@ -68,3 +68,50 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Daily exchange-rate service
+
+The Express server fetches the KRW to VND exchange rate when it starts and every day at 7:00 a.m. Vietnam time. Keep the server running for the daily schedule to execute. The React app reads the latest cached rate from the server and checks for updates every five minutes.
+
+For local development, run these commands in separate terminals:
+
+```sh
+npm run server
+npm start
+```
+
+The Express API runs on port 4000, and the React development server proxies `/api` requests to it. To use a different schedule timezone, set `SCHEDULE_TIMEZONE` to a valid IANA timezone before starting the server, for example `Asia/Seoul`.
+
+To configure the private server-side API key, copy the example file and edit `.env`:
+
+```powershell
+Copy-Item .env.example .env
+# Edit .env and replace the placeholder with a long random secret.
+npm run server
+```
+
+The server loads `.env` on startup. It is ignored by Git; do not commit it or put the key in React code. You can also set `SCHEDULE_TIMEZONE` in `.env`.
+
+Then send a `PUT` request to `/api/exchange-rate` with the key in the `x-api-key` header and a positive numeric `rate` in the JSON body:
+
+```powershell
+Invoke-RestMethod -Method Put -Uri "http://localhost:4000/api/exchange-rate" `
+  -Headers @{ "x-api-key" = "your-secret-from-.env" } `
+  -ContentType "application/json" `
+  -Body '{"rate":19.5}'
+```
+
+The endpoint returns `401` if the key is missing or incorrect, `503` if the server key is not configured, and `400` for an invalid rate. Both protected endpoints share a limit of five requests per IP per minute; excess requests receive `429 Too Many Requests`. In production, configure the key through your hosting provider's environment settings rather than committing `.env`.
+
+To reset the cached rate by fetching it from the upstream exchange-rate API, call the protected reset endpoint:
+
+```powershell
+Invoke-RestMethod -Method Post -Uri "http://localhost:4000/api/exchange-rate/reset" `
+  -Headers @{ "x-api-key" = "your-secret-from-.env" }
+```
+
+It returns the refreshed `rate` and `updatedAt`. If the upstream fetch fails, it returns `502` and retains the existing rate.
+
+For production, install dependencies with `npm ci`, build the React app with `npm run build`, then start the server with `npm run server`. Express serves the built app and API from the same port. Configure `EXCHANGE_RATE_URL` and `SCHEDULE_TIMEZONE` in the hosting provider's environment settings; the server validates both at startup. Upstream exchange-rate requests time out after 10 seconds.
+
+Deploy one always-on server instance: the current exchange rate is stored in memory, and each server instance runs its own daily schedule. A restart clears the in-memory rate until the initial upstream fetch succeeds. Configure the host's liveness check to use `/health/live` and its readiness check to use `/health/ready`; readiness returns `503` until an exchange rate is available. If you later need multiple instances or restart-persistent rates, move the rate to shared persistent storage and run the schedule through a single external scheduler.

@@ -1,38 +1,360 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app {
   min-height: 100vh;
+  padding: 20px 0 48px;
+  overflow: hidden;
+  color: #111827;
+  background: #f8f9fb;
+  -webkit-font-smoothing: antialiased;
+}
+
+.banner-sections {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.banner-section {
+  margin-bottom: 50px;
+}
+
+.banner-header {
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 34px 48px 24px;
+}
+
+.banner-title {
+  margin: 0;
+  color: #111827;
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.25;
+}
+
+.more-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 4px;
+  color: #6b7280;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.more-link:hover {
+  color: #111827;
+}
+
+.more-chevron {
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.carousel {
+  position: relative;
+}
+
+.banner-track {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding: 0 48px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.banner-track::-webkit-scrollbar {
+  display: none;
+}
+
+.banner-card {
+  position: relative;
+  flex: 0 0 min(43vw, 600px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #111827;
+  box-shadow: 0 4px 12px rgb(17 24 39 / 8%);
+  cursor: pointer;
+}
+
+.banner-image-container,
+.banner-image,
+.banner-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  object-fit: cover;
+  transition: transform 500ms ease-out;
+  cursor: zoom-in;
+}
+
+.banner-image:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -5px;
+}
+
+.banner-card:hover .banner-image {
+  transform: scale(1.05);
+}
+
+.image-viewer {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 24px;
+  background: rgb(0 0 0 / 88%);
+  cursor: zoom-out;
 }
 
-.App-link {
-  color: #61dafb;
+.image-viewer-dialog {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.image-viewer-image {
+  display: block;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  object-fit: contain;
+}
+
+.image-viewer-close {
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  right: -14px;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #111827;
+  cursor: pointer;
+}
+
+.image-viewer-close-icon,
+.image-viewer-close-icon::before,
+.image-viewer-close-icon::after {
+  position: absolute;
+}
+
+.image-viewer-close-icon {
+  inset: 0;
+}
+
+.image-viewer-close-icon::before,
+.image-viewer-close-icon::after {
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 18px;
+  background: currentColor;
+  content: '';
+}
+
+.image-viewer-close-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.image-viewer-close-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.banner-badge {
+  position: absolute;
+  z-index: 1;
+  top: 22px;
+  left: 18px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 16%);
+}
+
+.banner-badge-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.banner-gradient {
+  background: linear-gradient(
+    0deg,
+    rgb(0 0 0 / 88%) 0%,
+    rgb(0 0 0 / 38%) 38%,
+    transparent 78%
+  );
+}
+
+.banner-copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 24px 32px 28px;
+  color: #fff;
+}
+
+.banner-card-title {
+  overflow: hidden;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 750;
+  letter-spacing: -0.8px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.banner-card:hover .banner-card-title {
+  color: #fca5a5;
+}
+
+.carousel-button {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: flex;
+  width: 66px;
+  height: 66px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 96%);
+  color: #111827;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.carousel-button:hover {
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+}
+
+.carousel-button-left {
+  left: 16px;
+}
+
+.carousel-button-right {
+  right: 16px;
+}
+
+.carousel-chevron {
+  width: 16px;
+  height: 16px;
+  border-top: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+}
+
+.carousel-button-left .carousel-chevron {
+  margin-left: 6px;
+  transform: rotate(-135deg);
+}
+
+.carousel-button-right .carousel-chevron {
+  margin-right: 6px;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 700px) {
+  .app {
+    padding-top: 24px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .banner-section {
+    margin-bottom: 30px;
+  }
+
+  .banner-header {
+    align-items: flex-end;
+    gap: 12px;
+    margin: 0 20px 20px;
+  }
+
+  .banner-title {
+    font-size: 25px;
+    letter-spacing: -0.8px;
+  }
+
+  .more-link {
+    gap: 7px;
+    font-size: 14px;
+  }
+
+  .banner-track {
+    gap: 16px;
+    padding: 0 20px;
+  }
+
+  .banner-card {
+    flex-basis: 85vw;
+    border-radius: 18px;
+  }
+
+  .banner-badge {
+    top: 14px;
+    left: 14px;
+    padding: 6px 11px;
+    border-radius: 8px;
+  }
+
+  .banner-badge-text {
+    font-size: 13px;
+  }
+
+  .banner-copy {
+    padding: 18px 20px 20px;
+  }
+
+  .banner-card-title {
+    font-size: 20px;
+  }
+
+  .carousel-button {
+    width: 48px;
+    height: 48px;
+  }
+
+  .carousel-button-left {
+    left: 8px;
+  }
+
+  .carousel-button-right {
+    right: 8px;
+  }
+
+  .carousel-chevron {
+    width: 12px;
+    height: 12px;
+    border-width: 3px;
   }
 }

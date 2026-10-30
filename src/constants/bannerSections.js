@@ -1,0 +1,145 @@
+export const BANNER_SECTION_1 = [
+  {
+    id: 1,
+    tag: 'nạp lần đầu',
+    badgeBg: '#eb0014',
+    image: '/lezhin/1st-ko-lezhin.jpg',
+    x: 0.7,
+    prices: [
+      { krw: 4900, labor_cost: 4000, y: 0.22 },
+      { krw: 9900, labor_cost: 6000, y: 0.44 },
+      { krw: 19900, labor_cost: 10000, y: 0.66 },
+      { krw: 39900, labor_cost: 15000, y: 0.88 },
+    ],
+  },
+  {
+    id: 2,
+    tag: 'nạp lần hai',
+    badgeBg: '#eb0014',
+    image: '/lezhin/2nd-ko-lezhin.jpg',
+    x: 0.75,
+    prices: [
+      { krw: 5000, labor_cost: 4000, y: 0.33 },
+      { krw: 10000, labor_cost: 6000, y: 0.55 },
+      { krw: 30000, labor_cost: 13000, y: 0.77 },
+    ],
+  },
+  {
+    id: 3,
+    tag: 'gói đổi điểm',
+    badgeBg: '#eb0014',
+    image: '/lezhin/exchange-point-ko-lezhin.jpg',
+    x: 0.65,
+    prices: [
+      { krw: 2000, labor_cost: 3000, y: 0.18 },
+      { krw: 5000, labor_cost: 4000, y: 0.36 },
+      { krw: 10000, labor_cost: 6000, y: 0.54 },
+      { krw: 20000, labor_cost: 10000, y: 0.72 },
+      { krw: 50000, labor_cost: 18000, y: 0.9 },
+    ],
+  },
+  {
+    id: 4,
+    tag: 'gói thường',
+    badgeBg: '#eb0014',
+    image: '/lezhin/regular-ko-lezhin.jpg',
+    x: 0.75,
+    prices: [
+      { krw: 5000, labor_cost: 4000, y: 0.15 },
+      { krw: 10000, labor_cost: 6000, y: 0.33 },
+      { krw: 20000, labor_cost: 10000, y: 0.52 },
+      { krw: 50000, labor_cost: 18000, y: 0.7 },
+      { krw: 90000, labor_cost: 25000, y: 0.89 },
+    ],
+  },
+];
+
+export const BANNER_SECTION_2 = [
+  {
+    id: 5,
+    tag: 'bomtoon',
+    badgeBg: '#FB359C',
+    image: '/others/bomtoon.jpg',
+    x: 0.7,
+    prices: [
+      { krw: 4500, labor_cost: 3000, y: 0.1 },
+      { krw: 9900, labor_cost: 6000, y: 0.26 },
+      { krw: 19800, labor_cost: 10000, y: 0.43 },
+      { krw: 29500, labor_cost: 13000, y: 0.59 },
+      { krw: 49800, labor_cost: 18000, y: 0.75 },
+      { krw: 50000, labor_cost: 18000, y: 0.91 },
+    ],
+  },
+  {
+    id: 6,
+    tag: 'ridibooks',
+    badgeBg: '#1E9EFF',
+    image: '/others/ridibooks.jpg',
+    x: 0.73,
+    prices: [
+      { krw: 2000, labor_cost: 3000, y: 0.23 },
+      { krw: 5000, labor_cost: 4000, y: 0.33 },
+      { krw: 10000, labor_cost: 6000, y: 0.425 },
+      { krw: 20000, labor_cost: 10000, y: 0.52 },
+      { krw: 30000, labor_cost: 15000, y: 0.665 },
+      { krw: 50000, labor_cost: 18000, y: 0.76 },
+      { krw: 70000, labor_cost: 20000, y: 0.86 },
+    ],
+  },
+  {
+    id: 7,
+    tag: 'mrblue',
+    badgeBg: '#3464fe',
+    image: '/others/mrblue.jpg',
+    x: 0.6,
+    prices: [
+      { krw: 3000, labor_cost: 3000, y: 0.175 },
+      { krw: 5000, labor_cost: 4000, y: 0.32 },
+      { krw: 10000, labor_cost: 6000, y: 0.46 },
+      { krw: 30000, labor_cost: 15000, y: 0.61 },
+      { krw: 50000, labor_cost: 18000, y: 0.75 },
+      { krw: 100000, labor_cost: 25000, y: 0.89 },
+    ],
+  },
+];
+
+export const BANNER_SECTION_3 = [
+  {
+    id: 8,
+    tag: 'nạp lần đầu',
+    badgeBg: '#eb0014',
+    image: '/lezhin/1st-en-lezhin.jpg',
+    x: 0.7,
+    prices: [
+      { usd: 5.99, y: 0.21 },
+      { usd: 10.99, y: 0.43 },
+      { usd: 15.99, y: 0.65 },
+      { usd: 24.99, y: 0.86 },
+    ],
+  },
+  {
+    id: 9,
+    tag: 'nạp lần hai',
+    badgeBg: '#eb0014',
+    image: '/lezhin/2nd-en-lezhin.jpg',
+    x: 0.7,
+    prices: [
+      { usd: 5.99, y: 0.27 },
+      { usd: 10.99, y: 0.54 },
+      { usd: 19.99, y: 0.82 },
+    ],
+  },
+  {
+    id: 10,
+    tag: 'gói đổi điểm',
+    badgeBg: '#eb0014',
+    image: '/lezhin/exchange-point-en-lezhin.jpg',
+    x: 0.7,
+    prices: [
+      { usd: 2.99, y: 0.31 },
+      { usd: 9.99, y: 0.5 },
+      { usd: 19.99, y: 0.69 },
+      { usd: 29.99, y: 0.88 },
+    ],
+  },
+];
