@@ -127,3 +127,5 @@ docker compose logs -f recharge-service
 The app is available at `http://localhost:4000`. Stop it with `docker compose down`. Do not commit `.env`; `.dockerignore` excludes it from the image build context. In production, set secrets through the platform's environment/secret settings instead of baking them into the image.
 
 On your hosting platform, deploy with the Dockerfile, provide `EXCHANGE_RATE_API_KEY` and `EXCHANGE_RATE_URL` as secret environment values, configure `/health/ready` as the readiness check, and set the instance count to one with autoscaling disabled.
+
+To keep a running Render instance active, set `KEEP_ALIVE_URL` in the service environment to `https://recharge-service-2x30.onrender.com/health/live`. The server requests that endpoint every five minutes and logs failures. This in-process job cannot wake a service after Render has already stopped it, and platform sleep behavior may vary; use an always-on plan if the site must be reliably available without cold starts.

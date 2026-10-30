@@ -10,6 +10,7 @@ const app = express();
 const port = Number(process.env.PORT) || 4000;
 const timezone = process.env.SCHEDULE_TIMEZONE || 'Asia/Ho_Chi_Minh';
 const exchangeRateUrl = process.env.EXCHANGE_RATE_URL;
+const keepAliveUrl = process.env.KEEP_ALIVE_URL;
 
 let latestRate = null;
 let updatedAt = null;
@@ -122,6 +123,22 @@ cron.schedule(
   },
   { timezone }
 );
+
+if (keepAliveUrl) {
+  cron.schedule('*/5 * * * *', async () => {
+    try {
+      const response = await fetch(keepAliveUrl, {
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (!response.ok) {
+        console.error(`Keep-alive request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Unable to send the keep-alive request:', error);
+    }
+  });
+  console.info('Website keep-alive requests enabled (every 5 minutes)');
+}
 
 app.listen(port, () => {
   console.info(`Exchange-rate server listening on port ${port} (daily schedule: 07:00 ${timezone})`);
