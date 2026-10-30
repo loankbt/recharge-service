@@ -1,0 +1,11 @@
+services:
+  recharge-service:
+    build: .
+    container_name: recharge-service
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      PORT: "4000"
+    ports:
+      - "4000:4000"

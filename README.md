@@ -112,6 +112,18 @@ Invoke-RestMethod -Method Post -Uri "http://localhost:4000/api/exchange-rate/res
 
 It returns the refreshed `rate` and `updatedAt`. If the upstream fetch fails, it returns `502` and retains the existing rate.
 
-For production, install dependencies with `npm ci`, build the React app with `npm run build`, then start the server with `npm run server`. Express serves the built app and API from the same port. Configure `EXCHANGE_RATE_URL` and `SCHEDULE_TIMEZONE` in the hosting provider's environment settings; the server validates both at startup. Upstream exchange-rate requests time out after 10 seconds.
+For production, build the Docker image and run the Express server from it. Express serves the built React app and API from the same port. Configure `EXCHANGE_RATE_URL` and `SCHEDULE_TIMEZONE` in the hosting provider's environment settings; the server validates both at startup. Upstream exchange-rate requests time out after 10 seconds.
 
-Deploy one always-on server instance: the current exchange rate is stored in memory, and each server instance runs its own daily schedule. A restart clears the in-memory rate until the initial upstream fetch succeeds. Configure the host's liveness check to use `/health/live` and its readiness check to use `/health/ready`; readiness returns `503` until an exchange rate is available. If you later need multiple instances or restart-persistent rates, move the rate to shared persistent storage and run the schedule through a single external scheduler.
+Run one always-on container instance: the current exchange rate is stored in memory, and each instance runs its own daily schedule. `compose.yaml` uses a fixed container name to prevent scaling that service with Docker Compose and restarts the same container after a failure or host restart. A restart clears the in-memory rate until the initial upstream fetch succeeds. Configure the host's liveness check to use `/health/live` and its readiness check to use `/health/ready`; readiness returns `503` until an exchange rate is available. If you later need multiple instances or restart-persistent rates, move the rate to shared persistent storage and run the schedule through a single external scheduler.
+
+To run locally with Docker, copy `.env.example` to `.env`, fill in the real API URL and a strong secret, then run:
+
+```sh
+docker compose up --build -d
+docker compose ps
+docker compose logs -f recharge-service
+```
+
+The app is available at `http://localhost:4000`. Stop it with `docker compose down`. Do not commit `.env`; `.dockerignore` excludes it from the image build context. In production, set secrets through the platform's environment/secret settings instead of baking them into the image.
+
+On your hosting platform, deploy with the Dockerfile, provide `EXCHANGE_RATE_API_KEY` and `EXCHANGE_RATE_URL` as secret environment values, configure `/health/ready` as the readiness check, and set the instance count to one with autoscaling disabled.
