@@ -101,6 +101,23 @@ export const BANNER_SECTION_2 = [
       { krw: 100000, labor_cost: 25000, y: 0.89 },
     ],
   },
+  {
+    id: 8,
+    tag: 'postype',
+    badgeBg: '#2c2c2f',
+    image: '/others/postype.jpg',
+    x: 0.65,
+    prices: [
+      { krw: 1000, labor_cost: 3000, y: 0.14 },
+      { krw: 3000, labor_cost: 3000, y: 0.26 },
+      { krw: 5000, labor_cost: 4000, y: 0.37 },
+      { krw: 10000, labor_cost: 6000, y: 0.49 },
+      { krw: 15000, labor_cost: 8000, y: 0.6 },
+      { krw: 20000, labor_cost: 10000, y: 0.72 },
+      { krw: 30000, labor_cost: 15000, y: 0.83 },
+      { krw: 50000, labor_cost: 18000, y: 0.945 },
+    ],
+  }
 ];
 
 export const BANNER_SECTION_3 = [
