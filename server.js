@@ -114,15 +114,15 @@ if (!cron.validate('0 7 * * *')) {
   throw new Error('Invalid daily exchange-rate schedule');
 }
 
-cron.schedule(
-  '0 7 * * *',
-  () => {
-    fetchKrwToVndRate().catch((error) => {
-      console.error('Unable to fetch the scheduled KRW to VND exchange rate:', error);
-    });
-  },
-  { timezone }
-);
+// cron.schedule(
+//   '0 7 * * *',
+//   () => {
+//     fetchKrwToVndRate().catch((error) => {
+//       console.error('Unable to fetch the scheduled KRW to VND exchange rate:', error);
+//     });
+//   },
+//   { timezone }
+// );
 
 if (keepAliveUrl) {
   cron.schedule('*/5 * * * *', async () => {
@@ -142,7 +142,7 @@ if (keepAliveUrl) {
 
 app.listen(port, () => {
   console.info(`Exchange-rate server listening on port ${port} (daily schedule: 07:00 ${timezone})`);
-  fetchKrwToVndRate().catch((error) => {
-    console.error('Unable to fetch the initial KRW to VND exchange rate:', error);
-  });
+  // fetchKrwToVndRate().catch((error) => {
+  //   console.error('Unable to fetch the initial KRW to VND exchange rate:', error);
+  // });
 });
